@@ -7,18 +7,14 @@ const rl = readline.createInterface({
 });
 
 const options = {
-  slack: {
-    messageText: 'It works!'
-  },
-  giphy: {
-    apiKey: 'dc6zaTOxFJmzC',
-    tag: 'code test passed',
-    rating: 'pg'
-  }
+  giphyAPIKey: 'dc6zaTOxFJmzC',
+  text: 'It works!',
+  tag: 'code test passed',
+  rating: 'pg'
 };
 
 rl.question('Slack Webhook URL: ', slackWebhookUrl => {
-  options.slack.webhookUrl = slackWebhookUrl;
+  options.webhookUrl = slackWebhookUrl;
   require('./index')(options);
   rl.close();
 });
