@@ -1,6 +1,6 @@
 {
   "name": "slack-giphy-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple node library that pulls a random GIF from giphy.com and posts it to slack",
   "main": "index.js",
   "scripts": {
