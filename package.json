@@ -1,0 +1,25 @@
+{
+  "name": "slack-giphy-node",
+  "version": "1.0.0",
+  "description": "A simple node library that pulls a random GIF from giphy.com and posts it to slack",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mujz/slack-giphy-node.git"
+  },
+  "keywords": [
+    "slack",
+    "giphy",
+    "deploy",
+    "notification"
+  ],
+  "author": "Mujtaba Al-Tameemi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mujz/slack-giphy-node/issues"
+  },
+  "homepage": "https://github.com/mujz/slack-giphy-node#readme"
+}
