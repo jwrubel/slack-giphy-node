@@ -1,7 +1,8 @@
 # slack-giphy-node
 
-A tiny library that does one thing; post a GIF to slack. 
-An example use case is posting a notification to a deployment channel everytime your app restarts, or posting a make it rain GIF everytime you recieve money through your app.
+A tiny library that does one thing; post a GIF to slack. Some example use cases include: 
+- Posting a notification to a deployment channel every time your app restarts, 
+- or posting a make it rain GIF every time you receive money through your app.
 
 # Install
 
@@ -20,6 +21,6 @@ require('slack-giphy-node')({
 ```
 You can also pass the following optional properties for extra control:
 
-`tag`: The GIF tag to limit randomness by.
-`rating`: Limit results to those rated (y,g, pg, pg-13 or r). Default is pg.
-`text`: Add a text to the slack message in addition to the GIF.
+- `tag`: The GIF tag to limit randomness by.
+- `rating`: Limit results to those rated (y,g, pg, pg-13 or r). Default is pg.
+- `text`: Add a text to the slack message in addition to the GIF.
