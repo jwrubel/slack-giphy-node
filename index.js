@@ -5,17 +5,17 @@ var https  = require('https');
 /**
  * Makes a GET request to the GIPHY api to get a random GIF
  * @param {object} options
- * @param {string} options.apiKey The API key for api.giphy.com. You can request one from http://api.giphy.com/submit
- * @param {string} [options.tag=''] The tag to get the random GIF for.
+ * @param {string} options.giphyAPIKey The API key for api.giphy.com. You can request one from http://api.giphy.com/submit
+ * @param {string} [options.tag=''] The GIF tag to limit randomness by.
  * @param {string} [options.rating='pg'] limit results to those rated (y,g, pg, pg-13 or r)
  * @return {Promise} The GIF
  */
 function getGIF(options) {
-  if (!options || typeof options.apiKey !== 'string') throw new TypeError('no gihpyAPIKey passed');
+  if (!options || typeof options.giphyAPIKey !== 'string') throw new TypeError('no giphyAPIKey passed');
 
   const reqOptions = {
     hostname: 'api.giphy.com',
-    path: `/v1/gifs/random?api_key=${options.apiKey}&rating=${options.rating}`,
+    path: `/v1/gifs/random?api_key=${options.giphyAPIKey}&rating=${options.rating}`,
     headers: { 'Content-Type': 'application/json' }
   };
 
@@ -36,7 +36,7 @@ function getGIF(options) {
  * Posts a message to slack
  * @param {object} options
  * @param {string} options.webhookUrl The webhook URL to post to. For more information: https://api.slack.com/incoming-webhooks
- * @param {string} [options.messageText=''] The text of the message to post to slack
+ * @param {string} [options.text=''] The text of the message to post to slack
  * @param {object} [img={}] The image to attach to the message
  * @param {string} [img.url=''] The URL of the attached image
  * @param {string} [img.caption=''] The caption of the attached image
@@ -46,7 +46,7 @@ function postToSlack(options, img = {}) {
   if (!options || typeof options.webhookUrl !== 'string') throw new TypeError('no slackWebookUrl passed');
 
   var slackMessage = JSON.stringify({
-    text: options.messageText,
+    text: options.text,
     attachments: [
       {
         fallback: img.caption,
@@ -75,23 +75,21 @@ function postToSlack(options, img = {}) {
 /**
  * Gets a GIF from giphy.com and posts it to slack
  * @param {object} options
- * @param {object} options.giphy The giphy options
- * @param {string} options.giphy.apiKey The API key for api.giphy.com. You can request one from http://api.giphy.com/submit
- * @param {string} [options.giphy.tag=''] The tag to get the random GIF for.
- * @param {string} [options.giphy.rating='pg'] limit results to those rated (y,g, pg, pg-13 or r)
- * @param {object} options.slack The slack options
- * @param {string} options.slack.webhookUrl The webhook URL to post to. For more information: https://api.slack.com/incoming-webhooks
- * @param {string} [options.slack.messageText=''] The text of the message to post to slack
+ * @param {string} options.giphyAPIKey The API key for api.giphy.com. You can request one from http://api.giphy.com/submit
+ * @param {string} [options.tag=''] The GIF tag to limit randomness by.
+ * @param {string} [options.rating='pg'] limit results to those rated (y,g, pg, pg-13 or r)
+ * @param {string} options.webhookUrl The webhook URL to post to. For more information: https://api.slack.com/incoming-webhooks
+ * @param {string} [options.text=''] The text of the message to post to slack
  */
 module.exports = options => {
-  return getGIF(options.giphy).then(
+  return getGIF(options).then(
     image => postToSlack(
-      options.slack,
+      options,
       {
         url: image.fixed_height_downsampled_url,
         caption: image.caption
       }
     ),
-    err => postToSlack(options.slack)
+    err => postToSlack(options)
   );
 };
